@@ -54,7 +54,7 @@ class ListCrudView(APIView):
 
         return JsonResponse(serializer.data, safe=False)
 
-    @extend_schema(
+    """ @extend_schema(
         responses={204: None, 404: None}
     )
     def delete(self, request, uuid):
@@ -65,7 +65,7 @@ class ListCrudView(APIView):
 
         list.delete()
 
-        return HttpResponse(status=204)
+        return HttpResponse(status=204) """
 
     @extend_schema(
         request=ListSerializer(partial=True),
