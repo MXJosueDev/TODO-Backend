@@ -114,7 +114,7 @@ if(os.getenv('DB_CONNECTION_STRING') == None):
 else:
     DATABASES['default'] = dj_database_url.parse(
         os.getenv('DB_CONNECTION_STRING'),
-        conn_max_age=600,
+        conn_max_age=60,
         conn_health_checks=True
     )
 
