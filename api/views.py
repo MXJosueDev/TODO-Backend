@@ -8,13 +8,13 @@ from drf_spectacular.utils import extend_schema
 from .models import Task, List
 from .serializers import TaskSerializer, ListSerializer
 
-def checkTask(pk):
+def getTask(pk):
     try:
         return Task.objects.get(pk=pk)
     except Task.DoesNotExist:
         return False 
 
-def checkList(uuid):
+def getList(uuid):
     try:
         return List.objects.get(pk=uuid)
     except List.DoesNotExist:
@@ -45,7 +45,7 @@ class ListCrudView(APIView):
         responses={200: ListSerializer, 404: None}
     )
     def get(self, request, uuid):
-        list = checkList(uuid)
+        list = getList(uuid)
 
         if not list:
             return HttpResponse(status=404)
@@ -58,7 +58,7 @@ class ListCrudView(APIView):
         responses={204: None, 404: None}
     )
     def delete(self, request, uuid):
-        list = checkList(uuid)
+        list = getList(uuid)
 
         if not list:
             return HttpResponse(status=404)
@@ -75,7 +75,7 @@ class ListCrudView(APIView):
         }
     )
     def patch(self, request, uuid):
-        list = checkList(uuid)
+        list = getList(uuid)
 
         if not list:
             return HttpResponse(status=404)
@@ -96,7 +96,7 @@ class ListTasksView(APIView):
         responses={200: TaskSerializer(many=True), 404: None}
     )
     def get(self, request, uuid):
-        list = checkList(uuid)
+        list = getList(uuid)
         if not list:
             return HttpResponse(status=404)
 
@@ -110,7 +110,7 @@ class ListTasksView(APIView):
         responses={201: TaskSerializer}
     )
     def post(self, request, uuid):
-        list = checkList(uuid)
+        list = getList(uuid)
         if not list:
             return HttpResponse(status=404)
 
@@ -136,11 +136,11 @@ class ListTasksCrudView(APIView):
         }
     )
     def patch(self, request, uuid, task_pk):
-        list = checkList(uuid)
+        list = getList(uuid)
         if not list:
             return HttpResponse(status=404)
 
-        task = checkTask(task_pk)
+        task = getTask(task_pk)
         if not task:
             return HttpResponse(status=404)
 
@@ -160,11 +160,11 @@ class ListTasksCrudView(APIView):
         }
     )
     def delete(self, request, uuid, task_pk):
-        list = checkList(uuid)
+        list = getList(uuid)
         if not list:
             return HttpResponse(status=404)
 
-        task = checkTask(task_pk)
+        task = getTask(task_pk)
         if not task:
             return HttpResponse(status=404)
         
@@ -210,7 +210,7 @@ class TaskEditView(APIView):
         }
     )
     def patch(self, request, pk):
-        task = checkTask(pk)
+        task = getTask(pk)
         if(not task):
             return HttpResponse(status=404)
 
@@ -230,7 +230,7 @@ class TaskEditView(APIView):
         }
     )
     def delete(self, request, pk):
-        task = checkTask(pk)
+        task = getTask(pk)
         if(not task):
             return HttpResponse(status=404)
             
