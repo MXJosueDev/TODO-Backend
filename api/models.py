@@ -5,6 +5,8 @@ from uuid import uuid4
 
 # Create your models here.
 
+# TODO: Remove unecesary methods
+
 class List(models.Model):
     uuid = models.CharField(max_length=50, unique=True, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
